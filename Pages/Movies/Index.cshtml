@@ -1,0 +1,117 @@
+﻿@page
+@model proiect.Pages.Movies.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<form asp-page="./Index" method="get">
+ <div class="form-actions no-color">
+ <p>
+ Find by Movie Title / Director Name:
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a asp-page="./Index">Back to full List</a>
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Movie[0].CoverArtPath)
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.TitleSort">
+                 @Html.DisplayNameFor(model => model.Movie[0].Title)
+               </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Movie[0].BoxOffice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Movie[0].Budget)
+            </th>
+            <th>
+                Success
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Movie[0].ReleaseDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Movie[0].Producer)
+            </th>
+            <th colspan="2">
+                <a asp-page="./Index" asp-route-sortOrder="@Model.DirectorSort">
+                    @Html.DisplayNameFor(model => model.Movie[0].Director)
+                </a>
+            <th>
+                @Html.DisplayNameFor(model => model.Movie[0].MovieGenres)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.MovieD.Movies)
+        {
+
+            string selectedRow = "";
+            if (item.ID == Model.MovieID)
+            {
+                selectedRow = "table-success";
+            }
+         <tr class="@selectedRow">
+             <td>
+                    <img src="~/images/@(item.CoverArtPath)" alt="Cover Art" style="width:100px;height:auto;" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BoxOffice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Budget)
+            </td>
+             <td>
+                    @if (item.Success)
+                    {
+                        <span>Yes</span>
+                    }
+                    else
+                    {
+                        <span>No</span>
+                   }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReleaseDate)
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.Producer.ProducerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Director.FullName)
+            </td>
+             <td>
+                    @{
+                        foreach (var category in item.MovieGenres)
+                        {
+                            @category.Genre.ID @: @category.Genre.GenreName <br/>
+                        }
+                    }
+             </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

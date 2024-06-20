@@ -1,0 +1,88 @@
+﻿@page
+@model proiect.Pages.Movies.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Movie</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Movie.ID" />
+                <div class="form-group">
+                 <label asp-for="CoverArt" class="control-label">Cover Art</label>
+                 <input type="file" asp-for="CoverArt" class="form-control" />
+                 <span asp-validation-for="CoverArt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Movie.Title" class="control-label"></label>
+                <input asp-for="Movie.Title" class="form-control" />
+                <span asp-validation-for="Movie.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Movie.BoxOffice" class="control-label"></label>
+                <input asp-for="Movie.BoxOffice" class="form-control" />
+                <span asp-validation-for="Movie.BoxOffice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Movie.Budget" class="control-label"></label>
+                <input asp-for="Movie.Budget" class="form-control" />
+                <span asp-validation-for="Movie.Budget" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Movie.ProducerID" class="control-label">Producer Name</label>
+                <select asp-for="Movie.ProducerID" class="form-control" asp-items="ViewBag.ProducerID">
+                </select>
+                <span asp-validation-for="Movie.ProducerID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Movie.DirectorID" class="control-label">Director Name</label>
+                <select asp-for="Movie.DirectorID" class="form-control" asp-items="ViewBag.DirectorID">
+                </select>
+                <span asp-validation-for="Movie.DirectorID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="table">
+                    <table>
+                     <tr>
+                            @{
+                                int cnt = 0;
+
+                                foreach (var gen in Model.AssignedGenreDataList)
+                                {
+                                    if (cnt++ % 3 == 0)
+                                    {
+                                        @:</tr><tr>
+                                    }
+                                    @:<td>
+                                        <input type="checkbox"
+                                               name="selectedGenres"
+                                               value="@gen.GenreID"
+                                               @(Html.Raw(gen.Assigned ? "checked=\"checked\"" : "")) />
+                                         @gen.GenreID @: @gen.Name
+                                    @:</td>
+                                }
+                            @:</tr>
+                            }
+                            </table>
+                        </div>
+                    </div>
+                                <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

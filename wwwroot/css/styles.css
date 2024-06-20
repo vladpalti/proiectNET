@@ -1,0 +1,21 @@
+/* wwwroot/css/styles.css */
+.star-rating {
+    display: flex;
+    direction: row;
+}
+
+.star {
+    font-size: 2rem;
+    color: #ccc; /* Grey color */
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.star:hover,
+.star:hover ~ .star {
+    color: gold; /* Yellow color */
+}
+
+.star.selected {
+    color: gold; /* Yellow color */
+}
