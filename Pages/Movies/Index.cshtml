@@ -46,14 +46,15 @@
                 @Html.DisplayNameFor(model => model.Movie[0].ReleaseDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Movie[0].Producer)
-            </th>
-            <th colspan="2">
                 <a asp-page="./Index" asp-route-sortOrder="@Model.DirectorSort">
                     @Html.DisplayNameFor(model => model.Movie[0].Director)
                 </a>
+            </th>
             <th>
-                @Html.DisplayNameFor(model => model.Movie[0].MovieGenres)
+                @Html.DisplayNameFor(model => model.Movie[0].Producer)
+            </th>
+            <th>
+                Genres
             </th>
         </tr>
     </thead>
@@ -92,20 +93,20 @@
             <td>
                 @Html.DisplayFor(modelItem => item.ReleaseDate)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Director.FullName)
+                </td>
              <td>
                 @Html.DisplayFor(modelItem => item.Producer.ProducerName)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Director.FullName)
-            </td>
-             <td>
+                <td>
                     @{
                         foreach (var category in item.MovieGenres)
                         {
-                            @category.Genre.ID @: @category.Genre.GenreName <br/>
+                            @category.Genre.ID @: @category.Genre.GenreName <br />
                         }
                     }
-             </td>
+                </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |

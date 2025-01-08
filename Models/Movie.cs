@@ -34,7 +34,7 @@ namespace proiect.Models
             get
             {
                 decimal revenuePercentage = (BoxOffice - Budget) / Budget;
-                return revenuePercentage >= 0.2m; 
+                return revenuePercentage >= 0.5m; 
             }
         }
     }

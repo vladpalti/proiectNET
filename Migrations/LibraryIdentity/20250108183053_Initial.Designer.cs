@@ -12,8 +12,8 @@ using proiect.Areas.Identity.Data;
 namespace proiect.Migrations.LibraryIdentity
 {
     [DbContext(typeof(LibraryIdentityContext))]
-    [Migration("20240620125923_CreateIdentityNew")]
-    partial class CreateIdentityNew
+    [Migration("20250108183053_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

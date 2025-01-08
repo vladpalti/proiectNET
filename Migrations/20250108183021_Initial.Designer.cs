@@ -12,8 +12,8 @@ using proiect.Data;
 namespace proiect.Migrations
 {
     [DbContext(typeof(proiectContext))]
-    [Migration("20240620155415_Genre2")]
-    partial class Genre2
+    [Migration("20250108183021_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

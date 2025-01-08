@@ -5,10 +5,24 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace proiect.Migrations
 {
-    public partial class Iniital : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Director",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Director", x => x.ID);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Genre",
                 columns: table => new
@@ -53,20 +67,6 @@ namespace proiect.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Director",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Director", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Movie",
                 columns: table => new
                 {
@@ -75,25 +75,24 @@ namespace proiect.Migrations
                     Title = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     BoxOffice = table.Column<decimal>(type: "decimal(6,2)", nullable: false),
                     Budget = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Success = table.Column<bool>(type: "bit", nullable: false),
                     ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ProducerID = table.Column<int>(type: "int", nullable: true),
                     DirectorID = table.Column<int>(type: "int", nullable: true),
                     BorrowingID = table.Column<int>(type: "int", nullable: true),
-                    CoverArt = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    CoverArtPath = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Movie", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Movie_Producer_ProducerID",
-                        column: x => x.ProducerID,
-                        principalTable: "Producer",
-                        principalColumn: "ID");
-                    table.ForeignKey(
                         name: "FK_Movie_Director_DirectorID",
                         column: x => x.DirectorID,
                         principalTable: "Director",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_Movie_Producer_ProducerID",
+                        column: x => x.ProducerID,
+                        principalTable: "Producer",
                         principalColumn: "ID");
                 });
 
@@ -161,14 +160,14 @@ namespace proiect.Migrations
                 filter: "[MovieID] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Movie_ProducerID",
-                table: "Movie",
-                column: "ProducerID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Movie_DirectorID",
                 table: "Movie",
                 column: "DirectorID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Movie_ProducerID",
+                table: "Movie",
+                column: "ProducerID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MovieGenre_GenreID",
@@ -199,10 +198,10 @@ namespace proiect.Migrations
                 name: "Movie");
 
             migrationBuilder.DropTable(
-                name: "Producer");
+                name: "Director");
 
             migrationBuilder.DropTable(
-                name: "Director");
+                name: "Producer");
         }
     }
 }
