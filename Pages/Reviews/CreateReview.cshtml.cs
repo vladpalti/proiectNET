@@ -24,7 +24,7 @@ namespace proiect.Pages.Reviews
         {
             _context = context;
             _identityContext = identityContext;
-            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));  // Null check to catch if it's not injected
+            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager)); 
         }
 
         [BindProperty]
@@ -34,10 +34,8 @@ namespace proiect.Pages.Reviews
 
         public async Task<IActionResult> OnGetAsync()
         {
-            // Get the current logged-in user's ID
             UserId = _userManager.GetUserId(User);
 
-            // Populate the movie selection list
             MovieSelectList = await _context.Movie
                 .Select(m => new SelectListItem
                 {
@@ -52,7 +50,6 @@ namespace proiect.Pages.Reviews
         {
             Console.WriteLine("OnPostAsync triggered!");
 
-            // Get current user ID
             var userId = _userManager.GetUserId(User);
             Console.WriteLine($"Current User ID: {userId}");
 
@@ -60,28 +57,26 @@ namespace proiect.Pages.Reviews
             {
                 ModelState.AddModelError(string.Empty, "User is not logged in.");
                 Console.WriteLine("User is not logged in.");
-                await PopulateDropdownAsync(); // Repopulate dropdown
+                await PopulateDropdownAsync(); 
                 return Page();
             }
 
-            // Assign the User and UserId fields
             Review.UserId = userId;
 
             var currentUser = await _userManager.FindByIdAsync(userId);
             if (currentUser != null)
             {
-                Review.User = currentUser.UserName; // Assign username (email)
+                Review.User = currentUser.UserName;
                 Console.WriteLine($"User found: {currentUser.UserName}");
             }
             else
             {
                 ModelState.AddModelError(string.Empty, "User not found.");
                 Console.WriteLine("User not found.");
-                await PopulateDropdownAsync(); // Repopulate dropdown
+                await PopulateDropdownAsync(); 
                 return Page();
             }
 
-            // Ensure Movie is assigned
             var movie = await _context.Movie.FirstOrDefaultAsync(m => m.ID == Review.MovieID);
             if (movie != null)
             {
@@ -92,11 +87,10 @@ namespace proiect.Pages.Reviews
             {
                 ModelState.AddModelError(string.Empty, "Movie not found.");
                 Console.WriteLine("Movie not found.");
-                await PopulateDropdownAsync(); // Repopulate dropdown
+                await PopulateDropdownAsync(); 
                 return Page();
             }
 
-            // Revalidate the model after setting User and Movie
             if (!TryValidateModel(Review, nameof(Review)))
             {
                 Console.WriteLine("Model validation failed after setting User and Movie.");
@@ -111,7 +105,7 @@ namespace proiect.Pages.Reviews
                             Console.WriteLine($"Key: {entry.Key}, Error: {error.ErrorMessage}");
                         }
                     }
-                    await PopulateDropdownAsync(); // Repopulate dropdown
+                    await PopulateDropdownAsync(); 
                     return Page();
                 }
             }
@@ -124,7 +118,6 @@ namespace proiect.Pages.Reviews
             return RedirectToPage("/Movies/Details", new { id = Review.MovieID });
         }
 
-        // Helper method to populate the dropdown list
         private async Task PopulateDropdownAsync()
         {
             MovieSelectList = await _context.Movie

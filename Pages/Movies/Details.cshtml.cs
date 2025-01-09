@@ -41,10 +41,6 @@ namespace proiect.Pages.Movies
             {
                 Movie = movie;
             }
-
-            var userId = _userManager.GetUserId(User); // Debugging the current user's ID
-            Console.WriteLine($"Current User ID: {userId}"); // Output to console
-
             return Page();
         }
 
