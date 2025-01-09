@@ -37,12 +37,13 @@ namespace proiect.Pages.Movies
             CurrentFilter = searchString;
 
             MovieD.Movies = await _context.Movie
-            .Include(b => b.Producer)
-            .Include(b => b.Director)
-            .Include(b => b.MovieGenres)
-            .ThenInclude(b => b.Genre)
+            .Include(m => m.Producer)
+            .Include(m => m.Director)
+            .Include(m => m.MovieGenres)
+            .ThenInclude(m => m.Genre)
+            .Include(m => m.Reviews)
             .AsNoTracking()
-            .OrderBy(b => b.Title)
+            .OrderBy(m => m.Title)
             .ToListAsync();
 
             if (!String.IsNullOrEmpty(searchString))

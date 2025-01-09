@@ -37,9 +37,9 @@ namespace proiect.Pages.Movies
             }
 
             Movie = await _context.Movie
-               .Include(b => b.Producer)
-               .Include(b => b.Director)
-               .Include(b => b.MovieGenres).ThenInclude(b => b.Genre)
+               .Include(m => m.Producer)
+               .Include(m => m.Director)
+               .Include(m => m.MovieGenres).ThenInclude(m => m.Genre)
                .AsNoTracking()
                .FirstOrDefaultAsync(m => m.ID == id);
 

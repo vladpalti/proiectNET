@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using proiect.Data;
 
@@ -11,9 +12,11 @@ using proiect.Data;
 namespace proiect.Migrations
 {
     [DbContext(typeof(proiectContext))]
-    partial class proiectContextModelSnapshot : ModelSnapshot
+    [Migration("20250109095820_Review")]
+    partial class Review
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -182,11 +185,11 @@ namespace proiect.Migrations
 
                     b.Property<string>("Comment")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
-                    b.Property<string>("Movie")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("MemberID")
+                        .HasColumnType("int");
 
                     b.Property<int>("MovieID")
                         .HasColumnType("int");
@@ -197,15 +200,9 @@ namespace proiect.Migrations
                     b.Property<DateTime>("ReviewDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("User")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("ID");
+
+                    b.HasIndex("MemberID");
 
                     b.HasIndex("MovieID");
 
@@ -248,11 +245,21 @@ namespace proiect.Migrations
 
             modelBuilder.Entity("proiect.Models.Review", b =>
                 {
-                    b.HasOne("proiect.Models.Movie", null)
+                    b.HasOne("proiect.Models.Member", "Member")
+                        .WithMany()
+                        .HasForeignKey("MemberID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("proiect.Models.Movie", "Movie")
                         .WithMany("Reviews")
                         .HasForeignKey("MovieID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Member");
+
+                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("proiect.Models.Director", b =>

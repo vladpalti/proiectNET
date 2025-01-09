@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
 namespace proiect.Models
@@ -29,6 +30,5 @@ namespace proiect.Models
                 return FirstName + " " + LastName;
             }
         }
-        public ICollection<Borrowing>? Borrowings { get; set; }
     }
 }

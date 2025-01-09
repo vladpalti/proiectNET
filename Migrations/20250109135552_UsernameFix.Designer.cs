@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using proiect.Data;
 
@@ -11,9 +12,11 @@ using proiect.Data;
 namespace proiect.Migrations
 {
     [DbContext(typeof(proiectContext))]
-    partial class proiectContextModelSnapshot : ModelSnapshot
+    [Migration("20250109135552_UsernameFix")]
+    partial class UsernameFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -184,10 +187,6 @@ namespace proiect.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Movie")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("MovieID")
                         .HasColumnType("int");
 
@@ -248,11 +247,13 @@ namespace proiect.Migrations
 
             modelBuilder.Entity("proiect.Models.Review", b =>
                 {
-                    b.HasOne("proiect.Models.Movie", null)
+                    b.HasOne("proiect.Models.Movie", "Movie")
                         .WithMany("Reviews")
                         .HasForeignKey("MovieID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("proiect.Models.Director", b =>

@@ -24,8 +24,6 @@ namespace proiect.Models
         public Producer? Producer { get; set; }
         public int? DirectorID { get; set; }
         public Director? Director { get; set; }
-        public int? BorrowingID { get; set; }
-        public Borrowing? Borrowing { get; set; }
         public ICollection<MovieGenre>? MovieGenres { get; set; }
         [Display(Name = "Cover Art")]
         public string? CoverArtPath { get; set; }
@@ -35,6 +33,17 @@ namespace proiect.Models
             {
                 decimal revenuePercentage = (BoxOffice - Budget) / Budget;
                 return revenuePercentage >= 0.5m; 
+            }
+        }
+        public ICollection<Review> Reviews { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Average Rating")]
+        public double AverageRating
+        {
+            get
+            {
+                return Reviews?.Any() == true ? Reviews.Average(r => r.Rating) : 0;
             }
         }
     }

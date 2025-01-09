@@ -280,6 +280,7 @@ namespace proiect.Migrations
                 {
                     b.Navigation("Movies");
                 });
+
 #pragma warning restore 612, 618
         }
     }

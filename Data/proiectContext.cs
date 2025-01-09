@@ -23,15 +23,6 @@ namespace proiect.Data
         public DbSet<proiect.Models.Genre>? Genre { get; set; }
 
         public DbSet<proiect.Models.Member>? Member { get; set; }
-
-        public DbSet<proiect.Models.Borrowing>? Borrowing { get; set; }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Movie>()
-                .HasOne(b => b.Borrowing)
-                .WithOne(b => b.Movie)
-                .HasForeignKey<Borrowing>(b => b.MovieID)
-                .HasPrincipalKey<Movie>(b => b.ID);
-        }
+        public DbSet<proiect.Models.Review>? Review { get; set; }
     }
 }
